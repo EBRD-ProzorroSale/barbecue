@@ -7,6 +7,12 @@ def vnmax(features):
     return sum([max([j['value'] for j in i['enum']]) for i in features])
 
 
+def calculate_coeficient(features, parameters):
+    vmax = Fraction(vnmax(features))
+    vn = sum([Fraction(i['value']) for i in parameters])
+    return 1 + vn / (1 - vmax)
+
+
 def cooking(price, features=None, parameters=None):
     """
     MEAT price normalization
@@ -68,9 +74,7 @@ def cooking(price, features=None, parameters=None):
     """
     if not features or not parameters:
         return price
-    vmax = Fraction(vnmax(features))
-    vn = sum([Fraction(i['value']) for i in parameters])
-    coef = 1 + vn / (1 - vmax)
+    coef = calculate_coeficient(features, parameters)
     return Fraction(price) * coef
 
 
