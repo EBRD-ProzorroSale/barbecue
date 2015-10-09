@@ -82,9 +82,5 @@ def chef(bids, features=None, ignore=[]):
     """
     MEAT bids sorting
     """
-    if not features:
-        sorted_bids = sorted(bids, key=lambda i: (i['value']['amount'], i['date']))
-    else:
-        vmax = Fraction(vnmax(features))
-        sorted_bids = sorted(bids, key=lambda i: (Fraction(i['value']['amount']) * (1 + sum([Fraction(j['value']) for j in i['parameters']]) / (1 - vmax)), i['date']))
+    sorted_bids = sorted(bids, key=lambda i: (cooking(i['value']['amount'], features, i['parameters']), i['date']))
     return [i for i in sorted_bids if i['id'] not in ignore]
