@@ -82,5 +82,7 @@ def chef(bids, features=None, ignore=[]):
     """
     MEAT bids sorting
     """
-    sorted_bids = sorted(bids, key=lambda i: (cooking(i['value']['amount'], features, i['parameters']), i['date']))
+    sorted_bids = sorted(bids, key=lambda i: (
+        cooking(i['value']['amount'], features, i.get('parameters', [])), i['date'])
+    )
     return [i for i in sorted_bids if i['id'] not in ignore]
