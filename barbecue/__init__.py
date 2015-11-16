@@ -75,7 +75,7 @@ def cooking(price, features=None, parameters=None):
     if not features or not parameters:
         return price
     coef = calculate_coeficient(features, parameters)
-    return Fraction(price) * coef
+    return Fraction(price) / coef
 
 
 def chef(bids, features=None, ignore=[]):
