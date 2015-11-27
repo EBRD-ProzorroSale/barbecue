@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import sys, os
 
-version = '0.1.dev4'
+version = '0.1.dev5'
 
 setup(name='barbecue',
       version=version,
