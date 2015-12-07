@@ -13,7 +13,7 @@ def calculate_coeficient(features, parameters):
     return 1 + vn / (1 - vmax)
 
 
-def cooking(price, features=None, parameters=None):
+def cooking(price, features=None, parameters=None, reverse=False):
     """
     MEAT price normalization
 
@@ -75,7 +75,7 @@ def cooking(price, features=None, parameters=None):
     if not features or not parameters:
         return price
     coef = calculate_coeficient(features, parameters)
-    return Fraction(price) / coef
+    return Fraction(price) * coef if reverse else Fraction(price) / coef
 
 
 def chef(bids, features=None, ignore=[], reverse=False):
@@ -83,6 +83,6 @@ def chef(bids, features=None, ignore=[], reverse=False):
     MEAT bids sorting
     """
     sorted_bids = sorted(bids, key=lambda i: (
-        [1, -1][reverse] * cooking(i['value']['amount'], features, i.get('parameters', [])), i['date'])
+        [1, -1][reverse] * cooking(i['value']['amount'], features, i.get('parameters', []), reverse), i['date'])
     )
     return [i for i in sorted_bids if i['id'] not in ignore]
