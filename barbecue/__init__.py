@@ -78,11 +78,11 @@ def cooking(price, features=None, parameters=None, reverse=False):
     return Fraction(price) * coef if reverse else Fraction(price) / coef
 
 
-def chef(bids, features=None, ignore=[], reverse=False):
+def chef(bids, features=None, ignore=[], reverse=False, awarding_criteria_key='amount'):
     """
     MEAT bids sorting
     """
     sorted_bids = sorted(bids, key=lambda i: (
-        [1, -1][reverse] * cooking(i['value']['amount'], features, i.get('parameters', []), reverse), i['date'])
+        [1, -1][reverse] * cooking(i['value'][awarding_criteria_key], features, i.get('parameters', []), reverse), i['date'])
     )
     return [i for i in sorted_bids if i['id'] not in ignore]
